@@ -1,6 +1,9 @@
 //Importing components from React Router dependency
 import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
 
+//Importing styles
+import "./styles/styles.scss";
+
 //Importing components needed for specified Routes
 import RegisterPage from "./pages/Register";
 import LoginPage from "./pages/Login";
