@@ -2,31 +2,54 @@
 import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
 
 //Importing components needed for specified Routes
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import Write from "./pages/Write";
-import Home from "./pages/Home";
-import Post from "./pages/Post";
+import RegisterPage from "./pages/Register";
+import LoginPage from "./pages/Login";
+import WritePage from "./pages/Write";
+import HomePage from "./pages/Home";
+import PostPage from "./pages/Post";
+import Layout from "./components/Layout";
 
 const router = createBrowserRouter([
+	/*
+
+	Method returns array of objects, where specified paths are declared.
+	Paths of Home, Post, Write pages are rendered within Layout component to have the same layout with Navigation above and Footer down below.
+
+	*/
 	{
 		path: "/",
-		element: <div>This is Home page</div>,
+		element: <Layout />,
+		children: [
+			{
+				path: "/",
+				element: <HomePage />,
+			},
+			{
+				path: "/post/:id",
+				element: <PostPage />,
+			},
+			{
+				path: "/write",
+				element: <WritePage />,
+			},
+		],
 	},
 	{
 		path: "/register",
-		element: <Register />,
+		element: <RegisterPage />,
 	},
 	{
 		path: "/login",
-		element: <Login />,
+		element: <LoginPage />,
 	},
 ]);
 
 function App() {
 	return (
-		<div>
-			<RouterProvider router={router} />
+		<div className="app">
+			<div className="container">
+				<RouterProvider router={router} />
+			</div>
 		</div>
 	);
 }
