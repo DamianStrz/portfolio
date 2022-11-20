@@ -1,0 +1,71 @@
+//Variables for styles
+
+//Backgrounds
+$mainColor: #f2deba;
+$secondaryColor: #ffefd6;
+$mainAccentColor: #0e5e6f;
+$secondaryAccentColor: #3a8891;
+
+//Fonts colors
+$mainFontColor: #000;
+$errorFontColor: #f00;
+
+.app {
+	.container {
+		//Login and registration forms styles
+
+		.authentication {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			background-color: $mainColor;
+		}
+
+		h1 {
+			font-size: 1.25em;
+			color: $mainAccentColor;
+			margin-bottom: 1.25em;
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			padding: 0.8em;
+			background-color: $secondaryColor;
+			width: 200px;
+			gap: 20px;
+
+			input {
+				padding: 10px;
+				border: none;
+				border-bottom: 1px solid $mainColor;
+				background-color: $secondaryColor;
+
+				&::placeholder {
+					color: $secondaryAccentColor;
+				}
+			}
+
+			p {
+				font-size: 0.75em;
+				color: $errorFontColor;
+				text-align: center;
+			}
+
+			span {
+				font-size: 0.75em;
+				text-align: center;
+			}
+		}
+
+		button {
+			padding: 10px;
+			border: none;
+			background-color: $secondaryAccentColor;
+			color: #fff;
+			cursor: pointer;
+		}
+	}
+}
