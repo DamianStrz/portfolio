@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-//Creating component for Login Page with arrow function
+/*Creating component for Login Page with arrow function
+Components contains p tag for errors handling
+*/
 const LoginPage = () => {
 	return (
 		<div className="authentication">
