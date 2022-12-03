@@ -36,6 +36,9 @@ $errorFontColor: #f00;
 			background-color: $secondaryColor;
 			width: 200px;
 			gap: 20px;
+			-webkit-box-shadow: 0px 0px 10px 0px #3a8891;
+			-moz-box-shadow: 0px 0px 10px 0px #3a8891;
+			box-shadow: 0px 0px 10px 0px #3a8891;
 
 			input {
 				padding: 10px;
