@@ -1,8 +1,8 @@
 # My portfolio
 In this repository I gathered my newest project.
 
-## Projects show my skills as a fronend developer.
-What technologies and frameworks I have used:
+## Projects that show my skills as a fronend developer.
+Technologies and frameworks I have used:
 * HTML,
 * CSS,
 * JavaScript,
@@ -12,4 +12,4 @@ What technologies and frameworks I have used:
 * Gatsby.js,
 * Next.js,
 * DatoCMS,
-* Contentful.
+* Contentful,
