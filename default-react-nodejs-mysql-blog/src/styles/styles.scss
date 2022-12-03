@@ -8,10 +8,20 @@ $secondaryAccentColor: #3a8891;
 
 //Fonts colors
 $mainFontColor: #000;
+$secondaryFontColor: #fff;
 $errorFontColor: #f00;
 
 .app {
+	display: flex;
+	justify-content: center;
+
 	.container {
+		width: 1024px;
+
+		.link {
+			text-decoration: none;
+			color: inherit;
+		}
 		//Login and registration forms styles
 
 		.authentication {
@@ -57,18 +67,71 @@ $errorFontColor: #f00;
 				text-align: center;
 			}
 
+			button {
+				padding: 10px;
+				border: none;
+				background-color: $secondaryAccentColor;
+				color: #fff;
+				cursor: pointer;
+			}
+
 			span {
 				font-size: 0.75em;
 				text-align: center;
 			}
 		}
 
-		button {
-			padding: 10px;
-			border: none;
-			background-color: $secondaryAccentColor;
-			color: #fff;
-			cursor: pointer;
+		//Login and registration forms styles
+		.navbar {
+			.container {
+				padding: 10px 0;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+
+				.logo {
+					img {
+						width: 124px;
+					}
+				}
+
+				.links {
+					display: flex;
+					align-items: center;
+					gap: 10px;
+
+					h6 {
+						font-size: 1rem;
+						font-weight: 300;
+					}
+
+					span {
+						cursor: pointer;
+					}
+				}
+
+				.write {
+					background-color: $mainColor;
+					width: 50px;
+					height: 50px;
+					border-radius: 50%;
+
+					// This property prevents links movement to the left when user hovers on .write element
+					border: 1px solid #fff;
+
+					display: flex;
+					align-items: center;
+					justify-content: center;
+
+					font-weight: 300;
+
+					&:hover {
+						color: $mainAccentColor;
+						background-color: #fff;
+						border: 1px solid $mainAccentColor;
+					}
+				}
+			}
 		}
 	}
 }
