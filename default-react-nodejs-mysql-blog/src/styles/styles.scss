@@ -81,7 +81,7 @@ $errorFontColor: #f00;
 			}
 		}
 
-		//Login and registration forms styles
+		//Navigation and navigation elements styles
 		.navbar {
 			.container {
 				padding: 10px 0;
@@ -132,6 +132,25 @@ $errorFontColor: #f00;
 					}
 				}
 			}
+		}
+
+		//Footer and footer elements styles
+
+		footer {
+			margin-top: 100px;
+			padding: 20px;
+			background-color: $secondaryColor;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			font-size: 0.75rem;
+
+
+			img {
+				height: 50px;
+				width: 50px;
+			}
+
 		}
 	}
 }
