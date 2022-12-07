@@ -3,6 +3,7 @@ import React from "react";
 import Edit from "../img/edit.png";
 import Delete from "../img/delete.png";
 import { Link } from "react-router-dom";
+import Menu from "../components/Menu";
 
 //Creating component for Post Page with arrow function
 const PostPage = () => {
@@ -69,7 +70,7 @@ const PostPage = () => {
 					</p>
 				</p>
 			</div>
-			<div className="menu">m</div>
+			<Menu />
 		</div>
 	);
 };

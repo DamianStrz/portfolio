@@ -8,7 +8,7 @@ $secondaryAccentColor: #3a8891;
 
 //Fonts colors
 $mainFontColor: #000;
-$secondaryFontColor: #fff;
+$secondaryFontColor: #3a8891;
 $errorFontColor: #f00;
 
 .app {
@@ -271,7 +271,6 @@ $errorFontColor: #f00;
 
 				h1 {
 					font-size: 2rem;
-
 				}
 
 				p {
@@ -280,8 +279,49 @@ $errorFontColor: #f00;
 				}
 			}
 
+			//Side menu for other posts
 			.menu {
 				flex: 2;
+				display: flex;
+				flex-direction: column;
+				gap: 16px;
+
+				h1 {
+					font-size: 1rem;
+					color: $mainFontColor;
+				}
+
+				.post {
+					display: flex;
+					flex-direction: column;
+					gap: 10px;
+
+					img {
+						width: 100%;
+						height: 200px;
+						object-fit: cover;
+					}
+
+					h2 {
+						color: $secondaryFontColor;
+					}
+
+					button {
+						width: max-content;
+						padding: 8px 16px;
+						border: none;
+						cursor: pointer;
+						background-color: #fff;
+						border: 1px solid $secondaryAccentColor;
+						color: $secondaryAccentColor;
+
+						&:hover {
+							border: 1px solid #fff;
+							background-color: $secondaryAccentColor;
+							color: $mainColor;
+						}
+					}
+				}
 			}
 		}
 	}
