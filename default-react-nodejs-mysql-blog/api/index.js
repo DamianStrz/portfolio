@@ -1,8 +1,8 @@
 import express from "express";
-
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts.js";
+import cookieParser from "cookie-parser";
 
 /*
 Initializing express in app
@@ -11,6 +11,8 @@ Initializing express in app
 const app = express();
 
 app.use(express.json());
+
+app.use(cookieParser());
 
 /*
 At URL host/api/posts/{route_declared_in_posts.js} it shows route declared in posts.js
