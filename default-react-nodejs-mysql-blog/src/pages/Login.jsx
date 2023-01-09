@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { AuthContext } from "../context/authContext";
 /*Creating component for Login Page with arrow function
 Components contains p tag for errors handling
 */
@@ -16,6 +16,7 @@ const LoginPage = () => {
 	//Using useNavigate to redirect to Login Page
 	const navigate = useNavigate();
 
+	const { login } = useContext(AuthContext);
 	//Function that saves data from inputs as state
 	const handleChange = (e) => {
 		setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -27,7 +28,7 @@ const LoginPage = () => {
 		e.preventDefault();
 
 		try {
-			await axios.post("/auth/login", inputs);
+			await login(inputs);
 			navigate("/");
 		} catch (err) {
 			setErr(err.response.data);
