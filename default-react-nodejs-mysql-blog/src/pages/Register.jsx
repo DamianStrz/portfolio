@@ -14,7 +14,6 @@ const RegisterPage = () => {
 
 	const [err, setErr] = useState(null);
 
-
 	//Using useNavigate to redirect to Login Page
 	const navigate = useNavigate();
 
@@ -30,7 +29,7 @@ const RegisterPage = () => {
 
 		try {
 			await axios.post("/auth/register", inputs);
-			navigate("/login")
+			navigate("/login");
 		} catch (err) {
 			setErr(err.response.data);
 		}
@@ -62,7 +61,11 @@ const RegisterPage = () => {
 					onChange={handleChange}
 				/>
 				<button onClick={handleSubmit}>Register</button>
-				{err && <p>User <b>{inputs.username}</b> already exist!</p>}
+				{err && (
+					<p>
+						User <b>{inputs.username}</b> already exist!
+					</p>
+				)}
 				<span>
 					Do you have an account?
 					<br />

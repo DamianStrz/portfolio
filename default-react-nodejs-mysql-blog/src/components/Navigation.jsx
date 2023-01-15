@@ -7,6 +7,8 @@ import Logo from "../img/logo.png";
 //Creating component for page Navigation bar with arrow function
 
 const Navigation = () => {
+	//Component uses two props set in context.
+
 	const { currentUser, logout } = useContext(AuthContext);
 
 	return (

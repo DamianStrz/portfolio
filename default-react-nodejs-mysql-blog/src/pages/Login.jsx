@@ -16,7 +16,9 @@ const LoginPage = () => {
 	//Using useNavigate to redirect to Login Page
 	const navigate = useNavigate();
 
+	//Component uses one props set in context
 	const { login } = useContext(AuthContext);
+
 	//Function that saves data from inputs as state
 	const handleChange = (e) => {
 		setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
