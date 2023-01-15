@@ -1,74 +1,69 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Edit from "../img/edit.png";
 import Delete from "../img/delete.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Menu from "../components/Menu";
+import axios from "axios";
+import moment from "moment";
+import { useContext } from "react";
+import { AuthContext } from "../context/authContext";
 
 //Creating component for Post Page with arrow function
 const PostPage = () => {
+	//State for posts data.
+	const [post, setPost] = useState({});
+
+	//useLocation hook returns current location object.
+	const location = useLocation();
+
+	//Using slice method to get post ID from current path.
+	const postId = location.pathname.split("/,[2]");
+
+	//Using currentUser props from context to check weather user can edit certain post.
+	const { currentUser } = useContext(AuthContext);
+
+	//After changing category blog shows only posts with defined category.
+	useEffect(() => {
+		//Async can't be used in useEffect callback so there is a need to create new function inside hook for that purpose.
+		const fetchData = async () => {
+			try {
+				const res = await axios.get(`/posts/${postId}`);
+				setPost(res.data);
+			} catch (err) {
+				console.log(err);
+			}
+		};
+		fetchData();
+	}, [postId]);
+
 	return (
 		<div className="single">
 			<div className="content">
-				<img
-					src="https://images.pexels.com/photos/4680086/pexels-photo-4680086.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-					alt="post-img"
-				/>
+				<img src={post?.img} alt={`post-img${post?.id}`} />
 				<div className="user">
 					<img
 						src="https://images.pexels.com/photos/7360385/pexels-photo-7360385.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
 						alt="user-pic"
 					/>
 					<div className="info">
-						<span>User</span>
-						<p>Posted 2 days ago</p>
+						<span>{post.username}</span>
+						<p>Posted {moment(post.date).fromNow()}</p>
 					</div>
 
 					{/* This link redirects user to Post edition page */}
 
-					<div className="edit">
-						<Link to="/write?edit=2">
-							<img src={Edit} alt="edit-button" />
-						</Link>
-						<img src={Delete} alt="delete-button" />
-					</div>
+					{currentUser.username === post.username && (
+						<div className="edit">
+							<Link to="/write?edit=2">
+								<img src={Edit} alt="edit-button" />
+							</Link>
+							<img src={Delete} alt="delete-button" />
+						</div>
+					)}
 				</div>
-				<h1>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum,
-					ipsa.
-				</h1>
-				<p>
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem
-						explicabo perferendis dignissimos quo atque similique magni
-						praesentium quasi expedita suscipit repellendus, at, tempore impedit
-						laboriosam, sunt fuga neque a. Eaque.
-						<br />
-						<br />
-						Culpa doloremque architecto accusantium pariatur voluptates, hic
-						exercitationem excepturi minima commodi dignissimos assumenda
-						laudantium similique odit repudiandae velit consequatur nemo,
-						laborum esse suscipit quas quos, mollitia optio.
-						<br />
-						<br />
-						Asperiores, rerum voluptas? Ratione amet autem dolore libero debitis
-						id deleniti minima. Quia modi atque temporibus saepe provident
-						numquam veritatis tempora culpa aspernatur beatae quos aut
-						voluptatibus dolore, quae ipsa sint itaque at!
-						<br />
-						<br />
-						Beatae non nulla, enim, doloribus voluptates pariatur molestias
-						possimus, quo quas sint hic! Voluptas aperiam voluptate rerum,
-						consectetur velit nemo consequatur accusantium dolor nam! Similique
-						ullam sequi quibusdam a itaque. At, vero vel?
-						<br />
-						<br />
-						Exercitationem, beatae magnam. Est a et hic voluptatem accusantium
-						placeat repudiandae quisquam magnam rem officiis amet, velit quis
-						quasi sit consequuntur. Nesciunt excepturi recusandae molestias.
-						Quam, sint?
-					</p>
-				</p>
+				<h1>{post.title}</h1>
+				{post.description}
 			</div>
 			<Menu />
 		</div>
