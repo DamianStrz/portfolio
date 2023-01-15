@@ -37,6 +37,7 @@ const HomePage = () => {
 	//State for posts data.
 	const [posts, setPosts] = useState([]);
 
+	//useLocation hook returns current location object.
 	const category = useLocation().search;
 
 	//After changing category blog shows only posts with defined category.

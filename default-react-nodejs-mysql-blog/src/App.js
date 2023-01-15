@@ -1,5 +1,5 @@
 //Importing components from React Router dependency
-import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 //Importing styles
 import "./styles/styles.scss";
