@@ -33,23 +33,32 @@ export const login = (req, res) => {
 
 	const query = "SELECT * FROM users WHERE username = ?";
 
+	//Using connected database to check weather user exists.
+
 	db.query(query, [req.body.username], (err, data) => {
 		if (err) return res.json;
 		if (data.length === 0) return res.status(404).json("User not found");
 
-		//Checking password
+		//Variable for password comparing
 		const isPasswordCorrect = bcrypt.compareSync(
 			req.body.password,
 			data[0].password
 		);
 
+		//Condition when password is not correct
 		if (!isPasswordCorrect)
 			return res.status(400).json("Wrong username or password");
 
+		//Variable for JWT access token
 		const token = jwt.sign({ id: data[0].id }, process.env.NODE_ENV_JWT);
 
+		//Deconstruction to isolate password from other data
 		const { password, ...other } = data[0];
 
+		/*
+		Setting cookie "access_token", using created jwt token with httpOnly attribute for security.
+		After success status response isolated data is returned.
+		*/
 		res
 			.cookie("access_token", token, {
 				httpOnly: true,
@@ -59,6 +68,9 @@ export const login = (req, res) => {
 	});
 };
 
+/*
+Function that log outs user and clears cookies out of JWT.
+*/
 export const logout = (req, res) => {
 	res
 		.clearCookie("access_token", {
