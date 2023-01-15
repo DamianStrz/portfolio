@@ -15,7 +15,9 @@ const Navigation = () => {
 		<div className="navbar">
 			<div className="container">
 				<div className="logo">
-					<img src={Logo} alt="logo" />
+					<Link to="/">
+						<img src={Logo} alt="logo" />
+					</Link>
 				</div>
 				<div className="links">
 					<Link className="link" to="/?cat=art">
