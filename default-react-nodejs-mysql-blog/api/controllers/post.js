@@ -16,7 +16,18 @@ export const getPosts = (req, res) => {
 };
 
 export const getPost = (req, res) => {
-	res.json("from controller");
+	/*
+	Query uses post id to to find certain post data.
+	Then uses post uid column to find username assigned to post.
+	*/
+	const query =
+		"SELECT `username`, `title`, `desc`, p.img, u.img AS userImg, `category`, `date` FROM users u JOIN posts p ON u.id=p.uid WHERE p.id=?";
+
+	db.query(query, [req.params.id], (err, data) => {
+		if (err) return res.json(err);
+
+		return res.status(200).json(data[0]);
+	});
 };
 
 export const addPost = (req, res) => {

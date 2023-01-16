@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-
 import Edit from "../img/edit.png";
 import Delete from "../img/delete.png";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Menu from "../components/Menu";
 import axios from "axios";
 import moment from "moment";
@@ -17,8 +16,11 @@ const PostPage = () => {
 	//useLocation hook returns current location object.
 	const location = useLocation();
 
+	//Using useNavigate to redirect to redirect to Homepage after deleting a post.
+	const navigate = useNavigate();
+
 	//Using slice method to get post ID from current path.
-	const postId = location.pathname.split("/,[2]");
+	const postId = location.pathname.split("/")[2];
 
 	//Using currentUser props from context to check weather user can edit certain post.
 	const { currentUser } = useContext(AuthContext);
@@ -37,15 +39,21 @@ const PostPage = () => {
 		fetchData();
 	}, [postId]);
 
+	const handleDelete = async () => {
+		try {
+			await axios.delete(`/posts/${postId}`);
+			navigate("/");
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
 	return (
 		<div className="single">
 			<div className="content">
 				<img src={post?.img} alt={`post-img${post?.id}`} />
 				<div className="user">
-					<img
-						src="https://images.pexels.com/photos/7360385/pexels-photo-7360385.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-						alt="user-pic"
-					/>
+					{post.userImg && <img src={post.userImg} alt="user-pic" />}
 					<div className="info">
 						<span>{post.username}</span>
 						<p>Posted {moment(post.date).fromNow()}</p>
@@ -56,14 +64,14 @@ const PostPage = () => {
 					{currentUser.username === post.username && (
 						<div className="edit">
 							<Link to="/write?edit=2">
-								<img src={Edit} alt="edit-button" />
+								<img src={Edit} alt="edit-button" onClick={handleDelete} />
 							</Link>
 							<img src={Delete} alt="delete-button" />
 						</div>
 					)}
 				</div>
 				<h1>{post.title}</h1>
-				{post.description}
+				{post.desc}
 			</div>
 			<Menu />
 		</div>
