@@ -64,9 +64,9 @@ const PostPage = () => {
 					{currentUser.username === post.username && (
 						<div className="edit">
 							<Link to="/write?edit=2">
-								<img src={Edit} alt="edit-button" onClick={handleDelete} />
+								<img src={Edit} alt="edit-button"  />
 							</Link>
-							<img src={Delete} alt="delete-button" />
+							<img onClick={handleDelete} src={Delete} alt="delete-button" />
 						</div>
 					)}
 				</div>
