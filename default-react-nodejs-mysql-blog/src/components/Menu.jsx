@@ -1,34 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 //Component displays other posts on the side of the Post Page.
 
-const Menu = () => {
-	const posts = [
-		{
-			id: 1,
-			title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-			desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-			img: "https://images.pexels.com/photos/7008010/pexels-photo-7008010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-		},
-		{
-			id: 2,
-			title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-			desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-			img: "https://images.pexels.com/photos/6489663/pexels-photo-6489663.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-		},
-		{
-			id: 3,
-			title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-			desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-			img: "https://images.pexels.com/photos/4230630/pexels-photo-4230630.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-		},
-		{
-			id: 4,
-			title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-			desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-			img: "https://images.pexels.com/photos/6157049/pexels-photo-6157049.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-		},
-	];
+const Menu = ({ cat }) => {
+	//State for posts data.
+	const [posts, setPosts] = useState([]);
+
+	//After changing category blog shows only posts with defined category.
+	useEffect(() => {
+		//Async can't be used in useEffect callback so there is a need to create new function inside hook for that purpose.
+		const fetchData = async () => {
+			try {
+				const res = await axios.get(`/posts/?cat=${cat}`);
+				setPosts(res.data);
+			} catch (err) {
+				console.log(err);
+			}
+		};
+		fetchData();
+	}, [cat]);
+	// const posts = [
+	// 	{
+	// 		id: 1,
+	// 		title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+	// 		desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
+	// 		img: "https://images.pexels.com/photos/7008010/pexels-photo-7008010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+	// 	},
+	// 	{
+	// 		id: 2,
+	// 		title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+	// 		desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
+	// 		img: "https://images.pexels.com/photos/6489663/pexels-photo-6489663.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+	// 	},
+	// 	{
+	// 		id: 3,
+	// 		title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+	// 		desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
+	// 		img: "https://images.pexels.com/photos/4230630/pexels-photo-4230630.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+	// 	},
+	// 	{
+	// 		id: 4,
+	// 		title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+	// 		desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
+	// 		img: "https://images.pexels.com/photos/6157049/pexels-photo-6157049.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+	// 	},
+	// ];
 
 	return (
 		<div className="menu">

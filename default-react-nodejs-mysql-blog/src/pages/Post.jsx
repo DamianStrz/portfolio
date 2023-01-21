@@ -64,7 +64,7 @@ const PostPage = () => {
 					{currentUser.username === post.username && (
 						<div className="edit">
 							<Link to="/write?edit=2">
-								<img src={Edit} alt="edit-button"  />
+								<img src={Edit} alt="edit-button" />
 							</Link>
 							<img onClick={handleDelete} src={Delete} alt="delete-button" />
 						</div>
@@ -73,7 +73,7 @@ const PostPage = () => {
 				<h1>{post.title}</h1>
 				{post.desc}
 			</div>
-			<Menu />
+			<Menu cat={post.category} />
 		</div>
 	);
 };
