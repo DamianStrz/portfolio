@@ -40,6 +40,13 @@ const HomePage = () => {
 	//useLocation hook returns current location object.
 	const category = useLocation().search;
 
+	//Function to safely insert html text. Using DOMParser and parsing to string.
+
+	const getText = (html) => {
+		const doc = new DOMParser().parseFromString(html, "text/html");
+		return doc.body.textContent;
+	};
+
 	//After changing category blog shows only posts with defined category.
 	useEffect(() => {
 		//Async can't be used in useEffect callback so there is a need to create new function inside hook for that purpose.
@@ -60,13 +67,13 @@ const HomePage = () => {
 				{posts.map((post) => (
 					<div className="post" key={post.id}>
 						<div className="thumbnail">
-							<img src={post.img} alt={`post-${post.id}-img`} />
+							<img src={`../uploads/${post?.img}`} alt={`post-${post.id}-img`} />
 						</div>
 						<div className="content">
 							<Link className="link" to={`/post/${post.id}`}>
 								<h1>{post.title}</h1>
 							</Link>
-							<p>{post.desc}</p>
+							<p>{getText(post.desc)}</p>
 							<button>Read more...</button>
 						</div>
 					</div>

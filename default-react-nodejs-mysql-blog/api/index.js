@@ -21,7 +21,7 @@ Also using Date object to add date to files that have the same names.
 
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
-		cb(null, "../public/uploads");
+		cb(null, "../public/uploads/");
 	},
 	filename: function (req, file, cb) {
 		cb(null, Date.now() + file.originalname);
@@ -36,8 +36,9 @@ Third argument is a callback.
 
 const upload = multer({ storage: storage });
 
-app.post("/api/uploads", upload.single("file"), function (req, res) {
+app.post("/api/uploads/", upload.single("file"), function (req, res) {
 	const file = req.file;
+	console.log(file.originalname);
 	res.status(200).json(file.filename);
 });
 

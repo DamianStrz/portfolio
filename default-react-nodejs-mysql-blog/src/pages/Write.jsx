@@ -1,15 +1,20 @@
 import axios from "axios";
+import moment from "moment/moment";
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useLocation, useNavigate } from "react-router-dom";
 
 //Creating component for Write Page with arrow function
 
 const WritePage = () => {
-	const [value, setValue] = useState("");
-	const [title, setTitle] = useState("");
+	const state = useLocation().state;
+	const [value, setValue] = useState(state?.title || "");
+	const [title, setTitle] = useState(state?.desc || "");
 	const [file, setFile] = useState();
-	const [cat, setCat] = useState("");
+	const [cat, setCat] = useState(state?.category || "");
+
+	const navigate = useNavigate();
 
 	// Function for uploading files = images.
 	const upload = async () => {
@@ -17,7 +22,7 @@ const WritePage = () => {
 			const formData = new FormData();
 			formData.append("file", file);
 			const res = await axios.post("/uploads", formData);
-			console.log(res.data);
+			return res.data;
 		} catch (err) {
 			alert("You need to upload a file first!");
 		}
@@ -25,7 +30,27 @@ const WritePage = () => {
 
 	const handleClick = async (e) => {
 		e.preventDefault();
-		upload();
+		const imgUrl = upload();
+
+		try {
+			state
+				? await axios.put(`/posts/${state.id}`, {
+						title,
+						desc: value,
+						cat,
+						img: file ? imgUrl : "",
+				  })
+				: await axios.post(`/posts/`, {
+						title,
+						desc: value,
+						cat,
+						img: file ? imgUrl : "",
+						date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
+				  });
+			navigate("/");
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (
@@ -33,6 +58,7 @@ const WritePage = () => {
 			<div className="content">
 				<input
 					type="text"
+					value={title}
 					placeholder="Enter post title"
 					onChange={(e) => setTitle(e.target.value)}
 				/>
@@ -74,6 +100,7 @@ const WritePage = () => {
 					<div className="category">
 						<input
 							type="radio"
+							checked={cat === "art"}
 							name="category"
 							value="art"
 							id="art"
@@ -84,6 +111,7 @@ const WritePage = () => {
 					<div className="category">
 						<input
 							type="radio"
+							checked={cat === "science"}
 							name="category"
 							value="science"
 							id="science"
@@ -94,6 +122,7 @@ const WritePage = () => {
 					<div className="category">
 						<input
 							type="radio"
+							checked={cat === "technology"}
 							name="category"
 							value="technology"
 							id="technology"
@@ -104,19 +133,34 @@ const WritePage = () => {
 					<div className="category">
 						<input
 							type="radio"
+							checked={cat === "cinema"}
 							name="category"
-							value="technology"
-							id="technology"
+							value="cinema"
+							id="cinema"
 							onChange={(e) => setCat(e.target.value)}
 						/>
 						<label htmlFor="technology">Cinema</label>
 					</div>
 					<div className="category">
-						<input type="radio" name="category" value="design" id="design" />
+						<input
+							type="radio"
+							checked={cat === "design"}
+							name="category"
+							value="design"
+							id="design"
+							onChange={(e) => setCat(e.target.value)}
+						/>
 						<label htmlFor="design">Design</label>
 					</div>
 					<div className="category">
-						<input type="radio" name="category" value="food" id="food" />
+						<input
+							type="radio"
+							checked={cat === "food"}
+							name="category"
+							value="food"
+							id="food"
+							onChange={(e) => setCat(e.target.value)}
+						/>
 						<label htmlFor="food">Food</label>
 					</div>
 				</div>
