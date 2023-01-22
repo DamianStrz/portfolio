@@ -7,6 +7,7 @@ import axios from "axios";
 import moment from "moment";
 import { useContext } from "react";
 import { AuthContext } from "../context/authContext";
+import DOMPurify  from "dompurify";
 
 //Creating component for Post Page with arrow function
 const PostPage = () => {
@@ -51,7 +52,7 @@ const PostPage = () => {
 	return (
 		<div className="single">
 			<div className="content">
-				<img src={post?.img} alt={`post-img${post?.id}`} />
+				<img src={`../uploads/${post.img}`} alt={`post-img${post?.id}`} />
 				<div className="user">
 					{post.userImg && <img src={post.userImg} alt="user-pic" />}
 					<div className="info">
@@ -63,7 +64,7 @@ const PostPage = () => {
 
 					{currentUser.username === post.username && (
 						<div className="edit">
-							<Link to="/write?edit=2">
+							<Link to="/write?edit=2" state={post}>
 								<img src={Edit} alt="edit-button" />
 							</Link>
 							<img onClick={handleDelete} src={Delete} alt="delete-button" />
@@ -71,7 +72,11 @@ const PostPage = () => {
 					)}
 				</div>
 				<h1>{post.title}</h1>
-				{post.desc}
+				<p
+					dangerouslySetInnerHTML={{
+						__html: DOMPurify.sanitize(post.desc),
+					}}
+				></p>
 			</div>
 			<Menu cat={post.category} />
 		</div>
